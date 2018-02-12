@@ -23,6 +23,7 @@ describe("Color Code Converter", function() {
       expect(red).to.deep.equal([255, 0, 0]);
       expect(green).to.deep.equal([0, 255, 0]);
       expect(blue).to.deep.equal([0, 0, 255]);
+      
     });
   });
 });
