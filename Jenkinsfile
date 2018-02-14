@@ -1,20 +1,20 @@
-
-
 def runWithNodeVersion(shCommand) {
-  try {
-    withEnv([]) {
-      def NODE_VERSION = "8.9.4"
-      sh 'whoami'
-      sh """
-      . ${env.HOME}/.nvm/nvm.sh
-      nvm install ${NODE_VERSION}
-      nvm use ${NODE_VERSION}
-      ${shCommand}
-      sh """
-    }
-  } 
-  catch (err) {
-    throw err
+    withEnv(["NVM_DIR=${env.HOME}/.nvm"]) {
+      try {
+        def NODE_VERSION = "8.9.4"
+        sh """
+        set +x
+        . ~/.nvm/nvm.sh
+        nvm install 8.9.4
+        nvm use 8.9.4
+        set -x
+        node -v
+        ${shCommand}
+        sh """
+      } 
+      catch (err) {
+        throw err
+      }
   }
 }
 
