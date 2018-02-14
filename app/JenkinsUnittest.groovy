@@ -19,7 +19,6 @@ def runWithNodeVersion(shCommand) {
 }
 
 node {
-  checkout scm
   stage("Build") {
     runWithNodeVersion("npm install")
   }
