@@ -1,15 +1,28 @@
-pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      steps {
-        sh 'npm install'
-      }
+
+
+def runWithNodeVersion(shCommand) {
+  try {
+    withEnv([]) {
+      def NODE_VERSION = "8.9.4"
+      sh 'whoami'
+      sh """
+      . ${env.HOME}/.nvm/nvm.sh
+      nvm install ${NODE_VERSION}
+      nvm use ${NODE_VERSION}
+      ${shCommand}
+      sh """
     }
-    stage('Test') {
-      steps {
-        sh 'npm test'
-      }
-    }
+  } 
+  catch (err) {
+    throw err
+  }
+}
+
+node {
+  stage("Build") {
+    runWithNodeVersion("npm install")
+  }
+  stage("UnitTest") {
+    runWithNodeVersion("npm test")
   }
 }
